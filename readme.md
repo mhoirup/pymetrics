@@ -26,7 +26,7 @@ The `cross_section.py` submodule is for methods pertaining to cross-sectional da
 | Class/Function | Innner Method(s)             | Description                                              |
 | :------------- | :--------------------------- | :------------------------------------------------------- |
 | `linreg`       | `.f_test` <br/> `.summary()` | The OLS linear regression model.                         |
-| `possreg`      |                              | Poisson regression estimated via QMLE.                   |
+| `poissreg`      |                              | Poisson regression estimated via QMLE.                   |
 | `negbinreg`    |                              | Negative binomial regression estimated via 2-stage QMLE. |
 
 The `time_series.py` submodule is for methods pertaining to time series data. 
