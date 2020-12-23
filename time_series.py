@@ -4,58 +4,66 @@ from pymetrics.cross_section import linreg
 from scipy.stats import chi2, norm
 from scipy.optimize import minimize
 
+
 def embed(x, lags):
     if not isinstance(x, np.ndarray):
         x = np.array(x)
+    
     nrows, nvars = x.shape if x.ndim == 2 else [x.size, 1]
     matrix = np.zeros([nrows - lags, (nvars * lags) + nvars])
     for t in range(lags, nrows):
         if x.ndim == 1: xt = np.flip(x[(t - lags):(t + 1)])
         else: xt = np.array([x[t-i] for i in range(lags + 1)])
         matrix[t - lags] = xt.reshape(1, matrix.shape[1])
+    
     return matrix
 
 
 def covar(x, nobs=None):
     if x.ndim != 1:
         raise ValueError('only supported for univariate series')
+    
     if nobs is None: nobs = x.size
     Gamma, sigma = np.zeros([nobs, nobs]), np.mean((x - np.mean(x)) ** 2)
     rho = autocorr(x, nobs, type='acf').rho
     for i in range(nobs):
         row = np.insert(rho[:(nobs - (i + 1))], 0, 1)
         Gamma[i] = np.concatenate([np.flip(rho[:i]), row])
+    
     return Gamma * sigma
 
 
 class autocorr:
-    def __init__(self, x, max_lag=30, type='acf'):
+    def __init__(self, x, max_lag=30, corr='acf'):
         if not isinstance(x, np.ndarray):
             x = np.array(x)
+        
         N, lags, xdm = x.size, np.arange(1, max_lag+1), x - np.mean(x)
         denom = np.sum(xdm ** 2)
         rho = [np.sum(xdm[i:] * xdm[:(N-i)]) / denom for i in lags]
         rho, ci = np.array(rho), norm.isf(.025) / (N ** .5)
-        self.rho, self.ci, self.type, self.max_lag = rho, ci, type, max_lag
-        if type == 'pacf':
+        self.rho, self.ci, self.corr, self.max_lag = rho, ci, corr, max_lag
+        
+        if corr == 'pacf':
             prho = np.diag([rho[0]] * max_lag)
             prho[1,1] = (rho[1] - rho[0] ** 2) / (1 - rho[0] ** 2)
             for i in range(2, max_lag):
                 prev, new = np.trim_zeros(prho[:,i-2]), np.trim_zeros(prho[:,i-1])
                 new = np.concatenate([prev - new * np.flip(prev), new])
                 prho[:i,i-1] = new
-                yw_numerator = rho[i] - np.sum(new * np.flip(rho[:i]))
-                yw_denominator = 1 - np.sum(new * rho[:i])
-                prho[i,i] = yw_numerator / yw_denominator
+                numerator = rho[i] - np.sum(new * np.flip(rho[:i]))
+                denominator = 1 - np.sum(new * rho[:i])
+                prho[i,i] = numerator / denominator
+            
             self.rho = np.diag(prho)
     
     def result(self):
         
-        type, max_lag = self.type.upper(), self.max_lag
+        corr, max_lag = self.corr.upper(), self.max_lag
         lags = np.arange(1, self.max_lag + 1)
-        print(' ' * 2, type, 'of series:')
+        print(' ' * 2, corr, 'of series:')
         print(' ' * 2, 'Confidence interval:', '{:.3f}'.format(self.ci))
-        print(''); print(type, 'by lag:')
+        print(''); print(corr, 'by lag:')
         splits = np.split(lags, np.arange(8, (max_lag - (max_lag % 8)) + 1, 8))
         for split in splits:
             rm = ['{:.3f}'.format(r) for r in self.rho[split - 1]]

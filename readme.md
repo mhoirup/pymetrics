@@ -1,13 +1,14 @@
-
 # Pymetrics - Econometrics with Python
 
-A simple, but usable, Python library for doing econometric analysis of various data types. Main motivation is to improve my proficiency in Python together with a better understanding of econometric methods. Only dependencies are NumPy and SciPy. I've been a heavy R user for some time, which undoubtedly shows in my design choices, particularly in terms of console outout/printed statements.
+A custom econometrics library for Python with an emphasis on R-like output to
+the console. Only dependencies are Numpy and Scipy. 
 
 ## Main References
 
-Box, Jenkins, Reinsel & Ljung (2016), *Time Series Analysis: Forecasting and Control*, 5th edition.  
-Hamilton (1994), *Time Series Analysis*, 1st edition.  
-Wooldridge (2010), *Econometric Analysis of Cross-Section and Panel Data*, 2nd edition.
+Box, Jenkins, Reinsel & Ljung (2016), *Time Series Analysis: Forecasting and
+Control*, 5th edition.  Hamilton (1994), *Time Series Analysis*, 1st edition.
+Wooldridge (2010), *Econometric Analysis of Cross-Section and Panel Data*, 2nd
+edition.
 
 
 ## Overview of Module
@@ -26,7 +27,7 @@ The `cross_section.py` submodule is for methods pertaining to cross-sectional da
 | Class/Function | Innner Method(s)             | Description                                              |
 | :------------- | :--------------------------- | :------------------------------------------------------- |
 | `linreg`       | `.f_test` <br/> `.summary()` | The OLS linear regression model.                         |
-| `poissreg`      |                              | Poisson regression estimated via QMLE.                   |
+| `poissreg`     |                              | Poisson regression estimated via QMLE.                   |
 | `negbinreg`    |                              | Negative binomial regression estimated via 2-stage QMLE. |
 
 The `time_series.py` submodule is for methods pertaining to time series data. 
