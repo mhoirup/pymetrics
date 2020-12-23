@@ -6,8 +6,10 @@ the console. Only dependencies are Numpy and Scipy.
 ## Main References
 
 Box, Jenkins, Reinsel & Ljung (2016), *Time Series Analysis: Forecasting and
-Control*, 5th edition.  
+Control*, 5th edition.   
+
 Hamilton (1994), *Time Series Analysis*, 1st edition.
+
 Wooldridge (2010), *Econometric Analysis of Cross-Section and Panel Data*, 2nd
 edition.
 
