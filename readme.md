@@ -49,16 +49,22 @@ edition.
 
 * Currently performs no integration, so the name, for now, is a slight misnomer.
 
-## A Small Benchmark
+## A Small Comparison to R Equivalents
 
-A small comparison between this library and similar methods in R. The data pertains to Hermès International S.A. equity in the period Jan. 2007 to Nov. 2020 (N = 3545). I worked with this data for my thesis, and it's quite an interesting asset compared to others like it.
+Here we will do a brief comparision of this library to the result obtained from R. An autoregressive
+moving average model is estimated on a series of RMS.PA equity prices in the period Jan. 2007 to
+Nov. 2020 - a total of 3,545 observations.
 
 ### Some Preliminary Exploratory Analysis
 
-As can be seen, the data behaves much as would be expected of financial returns.
-
 ![alt text](https://github.com/mhoirup/pymetrics/blob/master/plots/lineplot.png?raw=true)
 ![alt text](https://github.com/mhoirup/pymetrics/blob/master/plots/returns.png?raw=true)
+
+The data behaves much as would be expected from a financial asset; the raw price clearly shows
+non-stationarity and implies the inclusion of a drift term rather than a pure random walk; the
+logarithmic returns on the other hand show a much more stable process with a sample mean around
+zero.
+
 ![alt text](https://github.com/mhoirup/pymetrics/blob/master/plots/histogram.png?raw=true)
 ![alt text](https://github.com/mhoirup/pymetrics/blob/master/plots/ecdf.png?raw=true)
 ![alt text](https://github.com/mhoirup/pymetrics/blob/master/plots/correlations.png?raw=true)
