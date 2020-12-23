@@ -13,7 +13,7 @@ edition.
 
 ## Overview of Module
 
-The `utils.py` submodule serves as toolbox meant to work 'behind the scenes'. It's main function is basically to save me having to write identical classes/methods in multiple scripts.
+### General Utilities
 
 | Class/Function  | Innner Method(s)                | Description                                                            |
 | :-------------- | :------------------------------ | :--------------------------------------------------------------------- |
