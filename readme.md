@@ -18,36 +18,34 @@ edition.
 
 ### General Utilities
 
-| Class/Function  | Innner Method(s)                | Description                                                            |
-| :-------------- | :------------------------------ | :--------------------------------------------------------------------- |
-| `_ols_`         |                                 | Compute and hold OLS (via QR) estimates.                               |
-| `_derivs_`      | `.pderivs()` <br/> `.hessian()` | Compute first and second partial derivatives of a continuous function. |
-| `_signi_`       |                                 | Yield signifiance codes for *p*-values similar to those in R.          |
-| `_output_`      |                                 | Print a regression summary similar to that in R.                       |
+| Method     | Inner Method(s)                 | Description                               |
+| :---       | :---                            | :---                                      |
+| `_ols_`    |                                 | Compute and hold OLS (via QR) estimates.  |
+| `_derivs_` | `.pderivs()` <br/> `.hessian()` | First and second partial derivatives.     |
+| `_signi_`  |                                 | R-like significance codes for *p*-values. |
+| `_output_` |                                 | R-like regression summary.                |
 
 ### Cross-Sectional Data Analysis
 
-| Class/Function | Innner Method(s)             | Description                                              |
-| :------------- | :--------------------------- | :------------------------------------------------------- |
-| `linreg`       | `.f_test` <br/> `.summary()` | The OLS linear regression model.                         |
-| `poissreg`     |                              | Poisson regression estimated via QMLE.                   |
-| `negbinreg`    |                              | Negative binomial regression estimated via 2-stage QMLE. |
+| Method      | Inner Method(s)              | Description                                    |
+| :---        | :---                         | :---                                           |
+| `linreg`    | `.f_test` <br/> `.summary()` | The OLS linear regression model.               |
+| `poissreg`  |                              | Poisson regression estimated via QMLE.         |
+| `negbinreg` |                              | Negative binomial regression via 2-stage QMLE. |
 
 ### Time Series Analysis
 
-| Class/Function | Innner Method(s)         | Description                                                                      |
-| :------------- | :----------------------- | :------------------------------------------------------------------------------- |
-| `embed`        |                          | Lags an (*n x k*) array *m* times, returning an *(n - m) x ((k x m) + k)* array. |
-| `covar`        |                          | Autocovariances of an array up to the *m*th lag (default *N*).                   |
-| `autocorr`     | `.print()`               | ACF/PACF of a uni array. Can print a correlogram into the console.               |
-| `crosscorr`    |                          | Cross-correlations for *m* lags of a multivariate array.                         |
-| `qstat`        | `.print()`               |  *Q*-statistics for uni/multi arrays as well as model objects.                   |
-| `adf`          |                          | The ADF test for unit roots. Supports trends and order selection via AIC/BIC.    |
-| `arima`        | `.forecast()`            | ARMA(*p,q*) via CSS and/or MLE. Supports forecasting.                            |
-| `var`          | `.stat()` <br/> `.irf()` | VAR(*p*) via OLS. Supports stationarity checks and multiplier analysis.          |
-| `var_order`    |                          | Sequential likelihood tests for selecting VAR order                              |
-
-* Currently performs no integration, so the name, for now, is a slight misnomer.
+| Method      | Inner Method(s)          | Description                                          |
+| :---        | :---                     | :---                                                 |
+| `embed`     |                          | Lags an array by an order *m*.                       |
+| `covar`     |                          | Series autocovariance.                               |
+| `autocorr`  | `.print()`               | ACF/PACF of a univariate series.                     |
+| `crosscorr` |                          | Cross-correlations of a multivariate series.         |
+| `qstat`     | `.print()`               |  *Q*-statistics for testing autocorrelations.        |
+| `adf`       |                          | Unit root testing with drift and/or trend terms.     |
+| `arma`      | `.forecast()`            | ARMA(*p,q*) via CSS and/or MLE.                      |
+| `var`       | `.stat()` <br/> `.irf()` | VAR(*p*) via OLS.                                    |
+| `var_order` |                          | Sequential likelihood tests for VAR order selection. |
 
 ## A Small Comparison to R Equivalents
 
@@ -67,12 +65,19 @@ zero.
 
 ![alt text](https://github.com/mhoirup/pymetrics/blob/master/plots/histogram.png?raw=true)
 ![alt text](https://github.com/mhoirup/pymetrics/blob/master/plots/ecdf.png?raw=true)
+
+While the literature often
+
 ![alt text](https://github.com/mhoirup/pymetrics/blob/master/plots/correlations.png?raw=true)
 
 
 ### Model Estimation
 
-ARMA(*p*,*q*) models are estimated on the series of returns. The custom `arima()` methods finds initial parameter values using the Hanna-Rissanen algorithm, and then estimates parameters via conditional-sum-of-squares, for then to finalise estimation via conditional MLE. Initial values for xi's and residuals are set to zero. Processes are estimated with orders < 3, with and without an intercept, and with selection based on the Akaike information criterium.
+ARMA(*p*,*q*) models are estimated on the series of returns. The custom `arima()` methods finds
+initial parameter values using the Hannan-Rissanen algorithm, and then estimates parameters via
+conditional-sum-of-squares, for then to finalise estimation via conditional MLE. Initial values for
+xi's and residuals are set to zero. Processes are estimated with orders < 3, with and without an
+intercept, and with selection based on the Akaike information criterium.
 
 ```python
 
@@ -150,7 +155,10 @@ sapply(c(8, 12, 16), function(m) {
 
 ```
 
-We find that in both instances an MA(1) with non-zero mean is selected. Discrepancies do occur, most likely due to differences in how the inverted information matrix is computed, but overall results are very similar. Residuals still exhibit significant autocorrelations, as shown by the subsequent Q statistics (of the Ljung-Box type).
+We find that in both instances an MA(1) with non-zero mean is selected.  Discrepancies do occur,
+most likely due to differences in how the inverted information matrix is computed, but overall
+results are very similar. Residuals still exhibit significant autocorrelations, as shown by the
+subsequent Q statistics (of the Ljung-Box type).
 
 
 
