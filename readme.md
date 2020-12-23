@@ -22,7 +22,7 @@ edition.
 | `_signi_`       |                                 | Yield signifiance codes for *p*-values similar to those in R.          |
 | `_output_`      |                                 | Print a regression summary similar to that in R.                       |
 
-The `cross_section.py` submodule is for methods pertaining to cross-sectional data.
+### Cross-Sectional Data Analysis
 
 | Class/Function | Innner Method(s)             | Description                                              |
 | :------------- | :--------------------------- | :------------------------------------------------------- |
@@ -30,7 +30,7 @@ The `cross_section.py` submodule is for methods pertaining to cross-sectional da
 | `poissreg`     |                              | Poisson regression estimated via QMLE.                   |
 | `negbinreg`    |                              | Negative binomial regression estimated via 2-stage QMLE. |
 
-The `time_series.py` submodule is for methods pertaining to time series data. 
+### Time Series Analysis
 
 | Class/Function | Innner Method(s)         | Description                                                                      |
 | :------------- | :----------------------- | :------------------------------------------------------------------------------- |
